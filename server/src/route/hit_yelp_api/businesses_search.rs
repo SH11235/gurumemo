@@ -5,7 +5,7 @@ use crate::usecase::hit_yelp_api::hit_business_search_api::{self, RequestParams}
 use axum::{extract::Query, response};
 use std::collections::HashMap;
 
-pub async fn handler(
+pub async fn businesses_search_handler(
     Query(params): Query<HashMap<String, String>>,
     // ) -> Result<response::Json<YelpBusinessSearchResult>, YelpAPIAccessError> {
 ) -> response::Json<YelpBusinessSearchResult> {
