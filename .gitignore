@@ -1,0 +1,7 @@
+db/*.wt
+target
+db/diagnostic.data
+db/storage.bson
+db/WiredTiger*
+db/journal
+db/mongod.lock
