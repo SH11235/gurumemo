@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { LocateCondition } from "../components/LocateCondition";
 import { SearchButton } from "../components/SearchButton";
+import { YelpResult } from "../components/YelpResult";
 import { conditions, yelpBusinessSearchAPI } from "../api_request/yelpBusinessSerachAPI";
 
 const Home: NextPage = () => {
@@ -17,6 +18,13 @@ const Home: NextPage = () => {
   );
   const [rangeState, setRangeState] = useState(
     conditions.range ? conditions.range : "100"
+  );
+  const [resultState, setResultState] = useState(
+    {
+      total: 0,
+      businesses: [],
+      region: {}
+    }
   );
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -36,14 +44,16 @@ const Home: NextPage = () => {
       return value;
     });
   };
-  const searchButtonClick = () => {
+  const searchButtonClick = async () => {
     const searchCond = {
       latitude: latitudeState,
       longitude: longitudeState,
       range: rangeState,
     };
-    // TODO resultStateを更新する yelpBusinessSearchAPI(searchCond, resultState, setResultState);
-    yelpBusinessSearchAPI(searchCond);
+    const result = await yelpBusinessSearchAPI(searchCond);
+    setResultState(() => {
+      return result;
+    });
   };
   return (
     <div className={styles.container}>
@@ -74,6 +84,7 @@ const Home: NextPage = () => {
           <LocateCondition word={rangeState} onChange={handleRangeChange} />
         </div>
         <SearchButton onClick={searchButtonClick} />
+        <YelpResult result={resultState}/>
       </main>
 
       <footer className={styles.footer}>

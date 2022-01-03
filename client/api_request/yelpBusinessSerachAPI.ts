@@ -19,7 +19,7 @@ export const yelpBusinessSearchAPI = async (
       mode: "cors",
     });
     let results = await res.json();
-    console.log(results); // TODO resultsを状態管理して画面描画する
+    return results;
   } catch (error) {
     console.error(error);
   }
