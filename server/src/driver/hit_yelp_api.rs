@@ -46,17 +46,14 @@ impl hit_business_search_api::HitBusinessSearchAPIUseCase for YelpApiDriver {
             },
         };
         for idx in 0..request_num {
-            let offset = Some((idx * LIMIT_BUSINESS_SEARCH_RESULTS_NUM).to_string());
-            let mut query_vec = vec![];
-            query_vec.extend([
-                ("latitude", &params.latitude),
-                ("longitude", &params.longitude),
-                ("radius", &params.radius),
-                ("offset", &offset),
-            ]);
+            let offset = Some(idx * LIMIT_BUSINESS_SEARCH_RESULTS_NUM);
+            let limit = Some(params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM));
+            let mut p = params.clone();
+            p.offset = offset;
+            p.limit = limit; 
             let res = reqwest::Client::new()
                 .get(&endpoint)
-                .query(&query_vec)
+                .query(&p)
                 .header("authorization", &bearer_token)
                 .send()
                 .await

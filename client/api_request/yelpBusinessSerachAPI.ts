@@ -14,6 +14,7 @@ export const yelpBusinessSearchAPI = async (
       `latitude=${cond.latitude}`,
       `longitude=${cond.longitude}`,
       `radius=${cond.range}`,
+      `limit=500`,
     ];
     const res = await fetch(`${yelpBusinessSearchAPIURL}?${params.join("&")}`, {
       mode: "cors",
