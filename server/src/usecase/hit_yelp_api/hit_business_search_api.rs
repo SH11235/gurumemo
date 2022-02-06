@@ -2,10 +2,14 @@ use crate::domain::entity::yelp_businesses_search_api::YelpBusinessSearchResult;
 use crate::hit_api_utils::error::YelpAPIAccessError;
 use crate::hit_api_utils::setting::LIMIT_BUSINESS_SEARCH_RESULTS_NUM;
 use async_trait::async_trait;
+use serde::{de, Deserialize, Serialize, Deserializer};
+use std::{fmt, str::FromStr};
 
 // reference https://www.yelp.com/developers/documentation/v3/business_search
-#[derive(Debug)]
+/// [`serde_with`]: https://docs.rs/serde_with/1.11.0/serde_with/rust/string_empty_as_none/index.html
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct RequestParams {
+    #[serde(default, deserialize_with = "empty_string_as_none")]
     pub term: Option<String>, // Optional. Search term, for example "food" or "restaurants". The term may also be business names, such as "Starbucks". If term is not included the endpoint will default to searching across businesses from a small number of popular categories.
     pub location: Option<String>, // Required if either latitude or longitude is not provided. This string indicates the geographic area to be used when searching for businesses. Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118". Businesses returned in the response may not be strictly within the specified location.
     pub latitude: Option<String>, // Required if location is not provided. Latitude of the location you want to search nearby.
@@ -31,6 +35,20 @@ pub struct RequestParams {
                                     // You can combine multiple attributes by providing a comma separated like "attribute1,attribute2".
                                     // If multiple attributes are used, only businesses that satisfy ALL attributes will be returned in search results.
                                     // For example, the attributes "hot_and_new,request_a_quote" will return businesses that are Hot and New AND offer Request a Quote.
+}
+
+/// Serde deserialization decorator to map empty Strings to None,
+fn empty_string_as_none<'de, D, T>(de: D) -> Result<Option<T>, D::Error>
+where
+    D: Deserializer<'de>,
+    T: FromStr,
+    T::Err: fmt::Display,
+{
+    let opt = Option::<String>::deserialize(de)?;
+    match opt.as_deref() {
+        None | Some("") => Ok(None),
+        Some(s) => FromStr::from_str(s).map_err(de::Error::custom).map(Some),
+    }
 }
 
 pub fn hit_business_seatch_api_num(count: i32) -> i32 {
