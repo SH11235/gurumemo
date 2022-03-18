@@ -1,7 +1,7 @@
 extern crate server;
 use dotenv::dotenv;
+use futures::StreamExt;
 use mongodb::{error::Result, Client};
-use futures::stream::TryStreamExt;
 use server::driver::hit_yelp_api::YelpApiDriver;
 use server::hit_api_utils::error::YelpAPIAccessError;
 use server::usecase::hit_yelp_api::hit_business_search_api::{self, RequestParams};
@@ -74,10 +74,9 @@ async fn main() -> Result<()> {
     coll.insert_many(res.businesses, None).await?;
 
     // DB登録情報確認
-    let mut cursor = coll.find(None, None).await?;
-    while let Some(book) = cursor.try_next().await? {
-        println!("title: {:?}", book);
-    }
+    let cursor = coll.find(None, None).await?;
+    let collections_count = cursor.count().await;
+    print!("DB 保存件数: {}", collections_count);
     eprintln!("*** 終了 ***");
     Ok(())
 }
