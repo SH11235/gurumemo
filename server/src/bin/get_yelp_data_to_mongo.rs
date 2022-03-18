@@ -16,6 +16,7 @@ struct CliArgument {
     latitude: Option<String>, // Required if location is not provided. Latitude of the location you want to search nearby.
     #[structopt(long)]
     longitude: Option<String>, // Required if location is not provided. Longitude of the location you want to search nearby.
+    #[structopt(long)]
     radius: Option<String>, // Optional. A suggested search radius in meters. This field is used as a suggestion to the search. The actual search radius may be lower than the suggested radius in dense urban areas, and higher in regions of less business density. If the specified value is too large, a AREA_TOO_LARGE error may be returned. The max value is 40000 meters (about 25 miles).
     categories: Option<String>, // Optional. Categories to filter the search results with. See the list of supported categories. The category filter can be a list of comma delimited categories. For example, "bars,french" will filter by Bars OR French. The category identifier should be used (for example "discgolf", not "Disc Golf").
     locale: Option<String>, // Optional. Specify the locale into which to localize the business information. See the list of supported locales. Defaults to en_US.
