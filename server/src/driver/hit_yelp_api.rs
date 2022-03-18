@@ -30,11 +30,6 @@ impl hit_business_search_api::HitBusinessSearchAPIUseCase for YelpApiDriver {
     ) -> Result<YelpBusinessSearchResult, YelpAPIAccessError> {
         let endpoint = format!("{}{}", yelp_api_base_url(), yelp_businesses_search_path());
         let bearer_token = format!("Bearer {}", yelp_api_key());
-        let limit = params.limit;
-        let request_num = match limit {
-            Some(num) => hit_business_search_api::hit_business_seatch_api_num(num),
-            None => 1,
-        };
         let mut result = YelpBusinessSearchResult {
             total: 0,
             businesses: vec![],
@@ -45,7 +40,28 @@ impl hit_business_search_api::HitBusinessSearchAPIUseCase for YelpApiDriver {
                 },
             },
         };
-        for idx in 0..request_num {
+        let limit = Some(params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM));
+        let mut p = params.clone();
+        p.limit = limit; 
+        let res = reqwest::Client::new()
+            .get(&endpoint)
+            .query(&p)
+            .header("authorization", &bearer_token)
+            .send()
+            .await
+            .map_err(|e| YelpAPIAccessError::InternalErrorWithMessage(e.to_string()))?;
+        let res_json: YelpBusinessSearchResult = res
+            .json()
+            .await
+            .map_err(|e| YelpAPIAccessError::InternalErrorWithMessage(e.to_string()))?;
+        result.total = res_json.total;
+        let request_num = hit_business_search_api::hit_business_seatch_api_num(result.total);
+        println!("request_num is {}", request_num);
+        result.region = res_json.region;
+
+        let business_info_vec = res_json.businesses;
+        result.businesses.extend(business_info_vec);
+        for idx in 1..request_num {
             let offset = Some(idx * LIMIT_BUSINESS_SEARCH_RESULTS_NUM);
             let limit = Some(params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM));
             let mut p = params.clone();
