@@ -7,6 +7,7 @@ import { LocateCondition } from "../components/LocateCondition";
 import { SearchButton } from "../components/SearchButton";
 import { YelpResult } from "../components/YelpResult";
 import { conditions, yelpBusinessSearchAPI } from "../api_request/yelpBusinessSerachAPI";
+import { ApiResult } from "../api_request/yelpBusinessSerachAPI"
 
 const Home: NextPage = () => {
     let conditions: conditions = {};
@@ -22,11 +23,12 @@ const Home: NextPage = () => {
     const [limitState, setLimitState] = useState(
         conditions.limit ? conditions.limit : "50"
     );
-    const [resultState, setResultState] = useState(
+    const [resultState, setResultState] = useState<ApiResult>(
         {
             total: 0,
             businesses: [],
-            region: {}
+            region: {},
+            isError: false
         }
     );
     const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +99,7 @@ const Home: NextPage = () => {
                     <LocateCondition word={limitState} onChange={handleLimitChange} />
                 </div>
                 <SearchButton onClick={searchButtonClick} />
-                <YelpResult result={resultState}/>
+                <YelpResult result={resultState} />
             </main>
 
             <footer className={styles.footer}>
