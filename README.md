@@ -1,18 +1,23 @@
+# Gurumemo
+
+Using [Yelp API](https://www.yelp.com/developers/documentation/v3)
+You shoud get API KEY.
+
 ## Environment
 
 ### Volta: Node.js version manager
 
-https://volta.sh/
+<https://volta.sh/>
 
 ### Docker, Docker Compose
 
-https://docs.docker.jp/engine/installation/index.html
-https://docs.docker.jp/compose/install.html
+<https://docs.docker.jp/engine/installation/index.html>
+<https://docs.docker.jp/compose/install.html>
 
 ## Frontend
 
 Next.js
-https://nextjs.org/
+<https://nextjs.org/>
 
 ```bash
 cd client
@@ -22,7 +27,7 @@ npm run dev
 ## Backend
 
 axum
-https://docs.rs/axum/latest/axum/
+<https://docs.rs/axum/latest/axum/>
 
 ```bash
 cd server
@@ -39,9 +44,10 @@ cargo run --bin get_yelp_data_to_mongo -- --latitude 35.69059985184279 --longitu
 ## Database
 
 MongoDB
-https://www.mongodb.com/
+<https://www.mongodb.com/>
 
 in MongoDB docker container
+
 ```bash
 # connection to db
 mongo -u root -p
