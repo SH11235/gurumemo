@@ -11,13 +11,13 @@ You shoud get API KEY.
 
 ### Docker, Docker Compose
 
-<https://docs.docker.jp/engine/installation/index.html>
-<https://docs.docker.jp/compose/install.html>
+- <https://docs.docker.jp/engine/installation/index.html>
+- <https://docs.docker.jp/compose/install.html>
 
 ## Frontend
 
 Next.js
-<https://nextjs.org/>
+- <https://nextjs.org/>
 
 ```bash
 cd client
@@ -27,7 +27,7 @@ npm run dev
 ## Backend
 
 axum
-<https://docs.rs/axum/latest/axum/>
+- <https://docs.rs/axum/latest/axum/>
 
 ```bash
 cd server
