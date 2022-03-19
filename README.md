@@ -1,6 +1,7 @@
 # Gurumemo
 
-Using [Yelp API](https://www.yelp.com/developers/documentation/v3)
+Using [Yelp API](https://www.yelp.com/developers/documentation/v3).
+
 You shoud get API KEY.
 
 ## Environment
