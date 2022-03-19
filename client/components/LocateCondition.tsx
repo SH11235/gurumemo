@@ -7,10 +7,10 @@ type Props = {
 };
 
 export const LocateCondition: FC<Props> = (props) => {
-	const { word, onChange } = props;
-	return (
-		<>
-		<input placeholder="40.12345" type="text" value={word} onChange={onChange} />
-		</>
-	)
+    const { word, onChange } = props;
+    return (
+        <>
+            <input placeholder="40.12345" type="text" value={word} onChange={onChange} />
+        </>
+    )
 }

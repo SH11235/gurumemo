@@ -5,10 +5,10 @@ type Props = {
 };
 
 export const SearchButton: FC<Props> = props => {
-	const { onClick } = props;
-	return (
-		<>
-		<button onClick={onClick}>Search</button>
-		</>
-	);
+    const { onClick } = props;
+    return (
+        <>
+            <button onClick={onClick}>Search</button>
+        </>
+    );
 };
