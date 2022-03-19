@@ -10,6 +10,11 @@ pub async fn businesses_search_handler(
     let yelp_api_driver = YelpApiDriver::new();
     let res = hit_business_search_api::execute(yelp_api_driver, params)
         .await
+        // for debug response
+        // .map(|res| {
+        //     println!("{:?}", res);
+        //     res
+        // })
         .map_err(|e| YelpAPIAccessError::InternalErrorWithMessage(e.to_string()))
         .unwrap();
     response::Json(res)
