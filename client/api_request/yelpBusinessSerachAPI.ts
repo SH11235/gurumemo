@@ -7,7 +7,7 @@ export type ApiResult = {
     isError: boolean;
 };
 
-export type conditions = {
+export type Conditions = {
     latitude?: string;
     longitude?: string;
     range?: string;
@@ -15,7 +15,7 @@ export type conditions = {
 };
 
 export const yelpBusinessSearchAPI = async (
-    cond: conditions,
+    cond: Conditions,
 ) => {
     try {
         const params: string[] = [

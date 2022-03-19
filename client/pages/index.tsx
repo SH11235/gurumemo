@@ -6,11 +6,11 @@ import styles from "../styles/Home.module.css";
 import { LocateCondition } from "../components/LocateCondition";
 import { SearchButton } from "../components/SearchButton";
 import { YelpResult } from "../components/YelpResult";
-import { conditions, yelpBusinessSearchAPI } from "../api_request/yelpBusinessSerachAPI";
+import { Conditions, yelpBusinessSearchAPI } from "../api_request/yelpBusinessSerachAPI";
 import { ApiResult } from "../api_request/yelpBusinessSerachAPI"
 
 const Home: NextPage = () => {
-    let conditions: conditions = {};
+    let conditions: Conditions = {};
     const [latitudeState, setLatitudeState] = useState(
         conditions.latitude ? conditions.latitude : "35.69059985184279"
     );
@@ -56,10 +56,11 @@ const Home: NextPage = () => {
         });
     };
     const searchButtonClick = async () => {
-        const searchCond = {
+        const searchCond: Conditions = {
             latitude: latitudeState,
             longitude: longitudeState,
             range: rangeState,
+            limit: limitState
         };
         const result = await yelpBusinessSearchAPI(searchCond);
         setResultState(() => {
