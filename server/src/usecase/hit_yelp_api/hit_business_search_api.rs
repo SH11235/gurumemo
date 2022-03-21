@@ -1,4 +1,4 @@
-use crate::domain::entity::yelp_businesses_search_api::YelpBusinessSearchResult;
+use crate::{domain::entity::yelp_businesses_search_api::YelpBusinessSearchResult, hit_api_utils::setting::MAX_RETRY_NUM};
 use crate::hit_api_utils::error::YelpAPIAccessError;
 use crate::hit_api_utils::setting::LIMIT_BUSINESS_SEARCH_RESULTS_NUM;
 use async_trait::async_trait;
@@ -57,7 +57,11 @@ pub fn hit_business_seatch_api_num(count: i32) -> i32 {
     } else {
         count / LIMIT_BUSINESS_SEARCH_RESULTS_NUM + 1
     };
-    request_num
+    if request_num > MAX_RETRY_NUM {
+        MAX_RETRY_NUM
+    } else {
+        request_num
+    }
 }
 
 #[test]

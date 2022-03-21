@@ -15,3 +15,4 @@ pub fn yelp_api_key() -> String {
 }
 
 pub const LIMIT_BUSINESS_SEARCH_RESULTS_NUM: i32 = 50;
+pub const MAX_RETRY_NUM: i32 = 20;
