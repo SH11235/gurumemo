@@ -68,6 +68,9 @@ pub fn hit_business_seatch_api_num(count: i32) -> i32 {
 fn check_req_num() {
     assert_eq!(hit_business_seatch_api_num(200), 4);
     assert_eq!(hit_business_seatch_api_num(201), 5);
+    assert_eq!(hit_business_seatch_api_num(1000), 20);
+    assert_eq!(hit_business_seatch_api_num(1001), 20);
+    assert_eq!(hit_business_seatch_api_num(2000), 20);
 }
 
 #[async_trait]
