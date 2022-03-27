@@ -18,6 +18,7 @@ You shoud get API KEY.
 ## Frontend
 
 Next.js
+
 - <https://nextjs.org/>
 
 ```bash
@@ -28,6 +29,7 @@ npm run dev
 ## Backend
 
 axum
+
 - <https://docs.rs/axum/latest/axum/>
 
 ```bash
@@ -66,14 +68,14 @@ db.business.find().count
 # reference https://qiita.com/sey323/items/700a47bf5f12e04fd4d0
 db.business.aggregate([
   { $group:
-    { 
+    {
     _id: "$id",
     dups: { "$addToSet": "$_id" },
     count: { "$sum": 1 }
     }
-  }, 
+  },
   { $match:
-    { 
+    {
     count: { "$gt": 1 }
     }
   }
