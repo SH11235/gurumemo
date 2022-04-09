@@ -44,7 +44,14 @@ cargo run --bin get_yelp_data_to_mongo -- --latitude 35.69059985184279 --longitu
 
 ## Database
 
-MongoDB
+You can use docker-compose to start mongodb and mongo-express.
+
+```sh
+docker-compose -f docker/docker-compose.yml up -d
+```
+
+-　MongoDB
+
 <https://www.mongodb.com/>
 
 in MongoDB docker container
@@ -82,3 +89,7 @@ db.business.aggregate([
     db.business.remove({_id : {$in: doc.dups }});
 })
 ```
+
+- mongo-express
+
+http://localhost:8081
