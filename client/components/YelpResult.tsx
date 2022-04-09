@@ -19,7 +19,10 @@ export const YelpResult: FC<Props> = props => {
             <div>
                 {
                     result.businesses.map((item: any, index: number) =>
-                        <p key={index + item.name}>{item.name}</p>)
+                        <a key={index + item.name} href={item.url}>
+                            <p>{item.name}</p>
+                        </a>
+                    )
                 }
             </div>
         );
