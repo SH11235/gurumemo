@@ -50,8 +50,8 @@ impl hit_business_search_api::HitBusinessSearchAPIUseCase for YelpApiDriver {
                 } else {
                     Some(lim)
                 }
-            },
-            None => None
+            }
+            None => None,
         };
         let res = reqwest::Client::new()
             .get(&endpoint)
@@ -65,12 +65,14 @@ impl hit_business_search_api::HitBusinessSearchAPIUseCase for YelpApiDriver {
             .await
             .map_err(|e| YelpAPIAccessError::InternalErrorWithMessage(e.to_string()))?;
         api_result.total = res_json.total;
-        let limit_num_for_request_num = if api_result.total > params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM) {
-            params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM)
-        } else {
-            api_result.total
-        };
-        let request_num = hit_business_search_api::hit_business_seatch_api_num(limit_num_for_request_num);
+        let limit_num_for_request_num =
+            if api_result.total > params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM) {
+                params.limit.unwrap_or(LIMIT_BUSINESS_SEARCH_RESULTS_NUM)
+            } else {
+                api_result.total
+            };
+        let request_num =
+            hit_business_search_api::hit_business_seatch_api_num(limit_num_for_request_num);
         println!("request_num is {}", request_num);
         api_result.region = res_json.region;
 
@@ -81,7 +83,7 @@ impl hit_business_search_api::HitBusinessSearchAPIUseCase for YelpApiDriver {
             let limit = Some(LIMIT_BUSINESS_SEARCH_RESULTS_NUM);
             let mut p = params.clone();
             p.offset = offset;
-            p.limit = limit; 
+            p.limit = limit;
             let res = reqwest::Client::new()
                 .get(&endpoint)
                 .query(&p)

@@ -1,8 +1,11 @@
-use crate::{domain::entity::yelp_businesses_search_api::YelpBusinessSearchResult, hit_api_utils::setting::MAX_RETRY_NUM};
 use crate::hit_api_utils::error::YelpAPIAccessError;
 use crate::hit_api_utils::setting::LIMIT_BUSINESS_SEARCH_RESULTS_NUM;
+use crate::{
+    domain::entity::yelp_businesses_search_api::YelpBusinessSearchResult,
+    hit_api_utils::setting::MAX_RETRY_NUM,
+};
 use async_trait::async_trait;
-use serde::{de, Deserialize, Serialize, Deserializer};
+use serde::{de, Deserialize, Deserializer, Serialize};
 use std::{fmt, str::FromStr};
 
 // reference https://www.yelp.com/developers/documentation/v3/business_search
