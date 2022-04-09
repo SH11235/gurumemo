@@ -5,3 +5,4 @@ db/storage.bson
 db/WiredTiger*
 db/journal
 db/mongod.lock
+server/.env

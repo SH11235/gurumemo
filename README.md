@@ -30,6 +30,16 @@ npm run dev
 
 axum
 
+- env
+
+Copy .env.sample. to .env
+
+```sh
+cp server/.env.sample server/.env
+```
+
+You should add your YELP_API_KEY.
+
 - <https://docs.rs/axum/latest/axum/>
 
 ```bash
