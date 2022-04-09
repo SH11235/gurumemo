@@ -1,12 +1,11 @@
 extern crate server;
 use dotenv::dotenv;
 use futures::StreamExt;
-use mongodb::{error::Result, Client};
+use server::database_utils::pool;
 use server::driver::hit_yelp_api::YelpApiDriver;
 use server::hit_api_utils::error::YelpAPIAccessError;
 use server::hit_api_utils::setting::MAX_TOTAL_NUM;
 use server::usecase::hit_yelp_api::hit_business_search_api::{self, RequestParams};
-use std::env;
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
@@ -53,12 +52,11 @@ struct CliArgument {
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
-    eprintln!("*** 開始 ***");
+async fn main() -> pool::MongoResult<()> {
+    println!("*** 開始 ***");
     dotenv().ok();
-    let mongo_db_url = env::var("MongoDBURL").expect("MongoDBURL is not found in .env.");
-    let client = Client::with_uri_str(mongo_db_url).await?;
-    let coll = client.database("yelp").collection("business");
+    let mongo_db_client = pool::mongo_db_client().await?;
+    let coll = mongo_db_client.database("yelp").collection("business");
     let arg = CliArgument::from_args();
 
     let params = RequestParams {
