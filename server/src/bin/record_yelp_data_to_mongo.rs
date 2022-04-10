@@ -95,7 +95,7 @@ async fn main() -> pool::MongoResult<()> {
             return Business {
                 categories: business.categories.clone(),
                 coordinates: business.coordinates.clone(),
-                latitude_longitude: [
+                longitude_latitude: [
                     business.coordinates.latitude,
                     business.coordinates.longitude,
                 ]

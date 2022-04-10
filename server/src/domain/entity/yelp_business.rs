@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 pub struct Business {
     pub categories: Vec<Categories>,
     pub coordinates: Coordinates,
-    pub latitude_longitude: Vec<f32>,
+    pub longitude_latitude: Vec<f32>,
     pub display_phone: String,
     pub distance: f32,
     pub id: String,
