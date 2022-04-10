@@ -62,19 +62,29 @@ You can use docker-compose to start mongodb and mongo-express.
 docker-compose -f docker/docker-compose.yml up -d
 ```
 
--　MongoDB
+- MongoDB
 
 <https://www.mongodb.com/>
+
+Create Index and enable a geospatial query.
 
 in MongoDB docker container
 
 ```bash
 # connection to db
+# password is written in docker-compose.yml
 mongo -u root -p
 
 # use yelp db
 use yelp
 
+# create index
+db.business.createIndex({longitude_latitude:"2dsphere"});
+```
+
+Frequently used commands
+
+```sh
 # Search all
 db.business.find()
 
