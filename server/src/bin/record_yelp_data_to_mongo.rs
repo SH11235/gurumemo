@@ -2,6 +2,7 @@ extern crate server;
 use dotenv::dotenv;
 use futures::StreamExt;
 use server::database_utils::pool;
+use server::domain::entity::yelp_business::Business;
 use server::driver::hit_yelp_api::YelpApiDriver;
 use server::hit_api_utils::error::YelpAPIAccessError;
 use server::hit_api_utils::setting::MAX_TOTAL_NUM;
@@ -87,7 +88,36 @@ async fn main() -> pool::MongoResult<()> {
         println!("{:?} ", params);
     }
     println!("{} 件のデータを取得", res.businesses.len());
-    coll.insert_many(res.businesses, None).await?;
+    let insert_data = res
+        .businesses
+        .iter()
+        .map(|business| {
+            return Business {
+                categories: business.categories.clone(),
+                coordinates: business.coordinates.clone(),
+                latitude_longitude: [
+                    business.coordinates.latitude,
+                    business.coordinates.longitude,
+                ]
+                .to_vec(),
+                display_phone: business.display_phone.clone(),
+                distance: business.distance,
+                id: business.id.clone(),
+                alias: business.alias.clone(),
+                image_url: business.image_url.clone(),
+                is_closed: business.is_closed.clone(),
+                location: business.location.clone(),
+                name: business.name.clone(),
+                phone: business.phone.clone(),
+                price: business.price.clone(),
+                rating: business.rating,
+                review_count: business.review_count,
+                url: business.url.clone(),
+                transactions: business.transactions.clone(),
+            };
+        })
+        .collect::<Vec<Business>>();
+    coll.insert_many(insert_data, None).await?;
 
     // DB登録情報確認
     let cursor = coll.find(None, None).await?;
