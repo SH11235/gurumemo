@@ -1,5 +1,8 @@
 use axum::{http::Method, routing::get, Router};
-use server::route::hit_yelp_api::businesses_search::businesses_search_handler;
+use server::route::{
+    get_yelp_data::businesses::mongo_businesses_search_handler,
+    hit_yelp_api::businesses_search::businesses_search_handler,
+};
 use std::net::SocketAddr;
 use tower_http::cors::{any, CorsLayer};
 
@@ -9,6 +12,10 @@ async fn main() {
     let app = Router::new()
         // `GET /` goes to `root`
         .route("/yelp/businesses/search", get(businesses_search_handler))
+        .route(
+            "/mongo/businesses/search",
+            get(mongo_businesses_search_handler),
+        )
         .layer(
             // see https://docs.rs/tower-http/latest/tower_http/cors/index.html
             // for more details

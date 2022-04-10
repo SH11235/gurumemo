@@ -8,7 +8,7 @@ pub struct YelpBusinessSearchResult {
     pub region: Region,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Businesses {
     pub categories: Vec<Categories>,
     pub coordinates: Coordinates,
@@ -28,19 +28,19 @@ pub struct Businesses {
     pub transactions: Vec<String>, // List of Yelp transactions that the business is registered for. Current supported values are pickup, delivery and restaurant_reservation.
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Categories {
     pub alias: String,
     pub title: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Coordinates {
     pub latitude: f32,
     pub longitude: f32,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Location {
     pub address1: Option<String>,
     pub address2: Option<String>,
