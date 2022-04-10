@@ -79,6 +79,7 @@ mongo -u root -p
 use yelp
 
 # create index
+# reference https://www.mongodb.com/docs/manual/reference/operator/query/nearSphere/
 db.business.createIndex({longitude_latitude:"2dsphere"});
 ```
 
