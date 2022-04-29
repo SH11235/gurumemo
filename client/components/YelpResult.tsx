@@ -1,5 +1,7 @@
 import { FC } from 'react';
-import { ApiResult } from "../api_request/yelpBusinessSerachAPI"
+import { ApiResult } from "../api_request/yelpBusinessSerachAPI";
+import { Card, CardMedia, CardActionArea, CardContent } from '@material-ui/core';
+import styles from "../styles/YelpResult.module.css";
 
 type Props = {
     result: ApiResult
@@ -16,12 +18,22 @@ export const YelpResult: FC<Props> = props => {
         )
     } else if (result.businesses.length > 0) {
         return (
-            <div>
+            <div className={styles.container}>
                 {
                     result.businesses.map((item: any, index: number) =>
-                        <a key={index + item.name} href={item.url}>
-                            <p>{item.name}</p>
-                        </a>
+                        <Card key={index + item.name} className={styles.card}>
+                            <CardActionArea href={item.url}>
+                                <CardContent className={styles.title}>
+                                    <a href={item.url}>
+                                        {item.alias ? item.alias: item.name}
+                                    </a>
+                                </CardContent>
+                                <CardMedia
+                                    component="img"
+                                    image={item.image_url}
+                                />
+                            </CardActionArea>
+                        </Card>
                     )
                 }
             </div>
